@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h1 class="display-4 fw-bold mb-3">
+                <span class="text-gradient">Simple, Transparent Pricing</span>
+            </h1>
+            <p class="lead text-muted">
+                Start learning for free today. Upgrade anytime for more features.
+            </p>
+            <div class="alert alert-info glass-alert mt-4">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Special Launch Offer:</strong> All features are currently free during our beta period!
+                Premium packages will be introduced in the future.
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 justify-content-center mb-5">
+        <!-- Free Forever Plan -->
+        <div class="col-lg-4 col-md-6">
+            <div class="glass-card h-100 p-4 text-center border border-success position-relative">
+                <div class="position-absolute top-1 start-50 translate-middle badge bg-success" style="z-index: 10;">
+                    <i class="fas fa-gift me-1"></i> Current Offer
+                </div>
+                <h3 class="mb-3 pt-4">Free Access</h3>
+                <div class="price mb-4">
+                    <span class="display-5">$0</span>
+                    <span class="text-muted">/forever (during beta)</span>
+                </div>
+                <ul class="list-unstyled text-start mb-4">
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>AI-Powered Tutor</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Adaptive Learning Paths</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Gamified Experience</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Code Debugger</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Mini Challenges</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Cloud Sync</li>
+                </ul>
+                <a href="{{ url_for('signup') }}" class="btn btn-success btn-lg w-100 glass-button">
+                    <i class="fas fa-rocket me-2"></i>Start Learning Free
+                </a>
+            </div>
+        </div>
+
+        <!-- Future Pro Plan (Disabled) -->
+        <div class="col-lg-4 col-md-6">
+            <div class="glass-card h-100 p-4 text-center opacity-50 position-relative">
+                <div class="position-absolute top-1 start-50 translate-middle badge bg-secondary">
+                    Coming Soon
+                </div>
+                <h3 class="mb-3 text-muted pt-4">Pro</h3>
+                <div class="price mb-4">
+                    <span class="display-5 text-muted">$9.99</span>
+                    <span class="text-muted">/month</span>
+                </div>
+                <ul class="list-unstyled text-start mb-4">
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Everything in Free</li>
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Unlimited Challenges</li>
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Advanced Debugging</li>
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Personalized Learning Paths</li>
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Priority Support</li>
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Early Access to New Features</li>
+                </ul>
+                <button class="btn btn-outline-secondary btn-lg w-100 glass-button-outline" disabled>
+                    <i class="fas fa-lock me-2"></i>Coming Soon
+                </button>
+            </div>
+        </div>
+
+        <!-- Future Team Plan (Disabled) -->
+        <div class="col-lg-4 col-md-6">
+            <div class="glass-card h-100 p-4 text-center opacity-50 position-relative">
+                <div class="position-absolute top-1 start-50 translate-middle badge bg-secondary">
+                    Coming Soon
+                </div>
+                <h3 class="mb-3 text-muted pt-4">Team</h3>
+                <div class="price mb-4">
+                    <span class="display-5 text-muted">$24.99</span>
+                    <span class="text-muted">/month</span>
+                </div>
+                <ul class="list-unstyled text-start mb-4">
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Everything in Pro</li>
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Up to 10 Team Members</li>
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Team Progress Dashboard</li>
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Custom Learning Paths</li>
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Priority Support</li>
+                    <li class="mb-2"><i class="fas fa-check text-muted me-2"></i>Team Collaboration Tools</li>
+                </ul>
+                <button class="btn btn-outline-secondary btn-lg w-100 glass-button-outline" disabled>
+                    <i class="fas fa-lock me-2"></i>Coming Soon
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced FAQ Section -->
+    <div class="row py-5">
+        <div class="col-12 text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">Frequently Asked <span class="text-gradient">Questions</span></h2>
+            <p class="lead text-muted">Find answers to common questions about our platform</p>
+        </div>
+
+        <div class="col-lg-10 mx-auto">
+            <div class="accordion" id="pricingAccordion">
+                <!-- FAQ Item 1 -->
+                <div class="accordion-item glass-card mb-3">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed glass-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne">
+                            <i class="fas fa-question-circle text-primary me-3"></i>
+                            Is the platform really free?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#pricingAccordion">
+                        <div class="accordion-body text-muted">
+                            <p>Yes! During our beta period, all features are completely free. We believe in making
+                                quality
+                                programming education accessible to everyone. In the future, we may introduce premium
+                                packages
+                                with additional features, but core functionality will remain free.</p>
+                            <div class="bg-dark bg-opacity-25 p-3 rounded mt-3">
+                                <small><i class="fas fa-info-circle text-info me-2"></i>
+                                    <strong>Note:</strong> Current users will be grandfathered in with special benefits
+                                    when premium packages are introduced.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="accordion-item glass-card mb-3">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed glass-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo">
+                            <i class="fas fa-clock text-success me-3"></i>
+                            How long will the free access last?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#pricingAccordion">
+                        <div class="accordion-body text-muted">
+                            <p>During our beta period, free access is indefinite. We want to gather feedback and improve
+                                our platform before introducing premium features. We'll provide at least 30 days notice
+                                before
+                                any changes to the free tier.</p>
+                            <div class="bg-dark bg-opacity-25 p-3 rounded mt-3">
+                                <small><i class="fas fa-lightbulb text-warning me-2"></i>
+                                    <strong>Tip:</strong> Early adopters will receive special recognition and benefits
+                                    in future releases.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="accordion-item glass-card mb-3">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed glass-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree">
+                            <i class="fas fa-shield-alt text-warning me-3"></i>
+                            Is my data secure?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#pricingAccordion">
+                        <div class="accordion-body text-muted">
+                            <p>Absolutely. We take data security seriously:</p>
+                            <ul>
+                                <li>All data is encrypted in transit and at rest</li>
+                                <li>We use Firebase Authentication for secure login</li>
+                                <li>No third-party data sharing without your consent</li>
+                                <li>Regular security audits and updates</li>
+                            </ul>
+                            <p class="mt-3">For more details, see our <a href="{{ url_for('privacy') }}"
+                                    class="text-primary">Privacy Policy</a>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="accordion-item glass-card mb-3">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed glass-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour">
+                            <i class="fas fa-laptop-code text-info me-3"></i>
+                            What programming languages do you support?
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#pricingAccordion">
+                        <div class="accordion-body text-muted">
+                            <p>Currently, we focus on Python as our primary teaching language, with plans to expand:</p>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <ul>
+                                        <li><strong>Currently Supported:</strong></li>
+                                        <li class="ms-3">Python (beginner to advanced)</li>
+                                        <li class="ms-3">JavaScript basics</li>
+                                        <li class="ms-3">HTML/CSS fundamentals</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul>
+                                        <li><strong>Coming Soon:</strong></li>
+                                        <li class="ms-3">Java</li>
+                                        <li class="ms-3">C++</li>
+                                        <li class="ms-3">React/Vue frameworks</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="bg-dark bg-opacity-25 p-3 rounded mt-3">
+                                <small><i class="fas fa-vote-yea text-success me-2"></i>
+                                    <strong>Request a language:</strong> Vote for your favorite language in our <a
+                                        href="#" class="text-primary">Community Forum</a>.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="accordion-item glass-card mb-3">
+                    <h2 class="accordion-header" id="headingFive">
+                        <button class="accordion-button collapsed glass-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFive">
+                            <i class="fas fa-users text-danger me-3"></i>
+                            Do you offer discounts for students or educators?
+                        </button>
+                    </h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#pricingAccordion">
+                        <div class="accordion-body text-muted">
+                            <p>Yes, we plan to offer special discounts for verified students and educators once premium
+                                packages are introduced:</p>
+                            <ul>
+                                <li><strong>Students:</strong> 50% discount with valid student ID</li>
+                                <li><strong>Educators:</strong> 70% discount with institutional email</li>
+                                <li><strong>Non-profits:</strong> Special pricing for educational organizations</li>
+                            </ul>
+                            <p class="mt-3">Please contact our support team with proof of your academic status to
+                                receive
+                                the discount when available.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="accordion-item glass-card">
+                    <h2 class="accordion-header" id="headingSix">
+                        <button class="accordion-button collapsed glass-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseSix">
+                            <i class="fas fa-sync-alt text-primary me-3"></i>
+                            Can I cancel my subscription anytime?
+                        </button>
+                    </h2>
+                    <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#pricingAccordion">
+                        <div class="accordion-body text-muted">
+                            <p>Absolutely. You can upgrade, downgrade, or cancel your subscription at any time with no
+                                penalties. Changes take effect immediately, and you'll only be charged for the time
+                                you've
+                                used on your current plan.</p>
+                            <div class="bg-dark bg-opacity-25 p-3 rounded mt-3">
+                                <small><i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                                    <strong>Important:</strong> Downgrading to free tier will retain your progress but
+                                    limit
+                                    access to premium features.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced CTA Section -->
+    <div class="row py-5">
+        <div class="col-12">
+            <div class="cta-card glass-card text-center p-5">
+                <div class="mb-4">
+                    <i class="fas fa-graduation-cap text-gradient fa-3x"></i>
+                </div>
+                <h2 class="display-5 fw-bold mb-4">Start Your <span class="text-gradient">Programming Journey</span>
+                    Today</h2>
+                <p class="lead text-white-75 mb-5">
+                    Join thousands of learners who are already transforming their careers with AI-powered education.
+                    Start learning today - no credit card required.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    {% if not session.user %}
+                    <a href="{{ url_for('signup') }}" class="btn btn-success btn-lg glass-button">
+                        <i class="fas fa-rocket me-2"></i>Get Started Free
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-success btn-lg glass-button-outline">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login to Continue
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-success btn-lg glass-button">
+                        <i class="fas fa-tachometer-alt me-2"></i>Continue Learning
+                    </a>
+                    {% endif %}
+                </div>
+
+                <div class="mt-5">
+                    <div class="d-flex justify-content-center align-items-center flex-wrap gap-4">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar bg-primary bg-opacity-25 p-2 me-2">
+                                <i class="fas fa-user-check text-primary"></i>
+                            </div>
+                            <span class="text-muted">100% Free During Beta</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar bg-success bg-opacity-25 p-2 me-2">
+                                <i class="fas fa-shield-alt text-success"></i>
+                            </div>
+                            <span class="text-muted">Secure & Private</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar bg-warning bg-opacity-25 p-2 me-2">
+                                <i class="fas fa-headset text-warning"></i>
+                            </div>
+                            <span class="text-muted">24/7 Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

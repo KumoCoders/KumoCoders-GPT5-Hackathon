@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI KumoCoders Coach</title>
+
+    <!-- Bootstrap 5.3.7 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome 7.0.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- jQuery 3.7.1 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap 5.3.7 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/x-icon">
+
+    {% block head %}{% endblock %}
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark glass-navbar shadow-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url_for('index') }}">
+                <div class="navbar-logo me-2">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <span class="d-none d-md-block">AI KumoCoders Coach</span>
+                <span class="d-md-none">AI Coach</span>
+            </a>
+
+            <div class="d-flex align-items-center">
+                <!-- Notification Bell (for logged-in users) -->
+                {% if session.user %}
+                <div class="nav-item dropdown me-3 d-none d-md-block">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="notificationsDropdown" role="button"
+                        data-bs-toggle="dropdown">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge bg-danger rounded-pill badge-notification">3</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end glass-card">
+                        <li>
+                            <h6 class="dropdown-header">Notifications</h6>
+                        </li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-tasks text-info me-2"></i>New challenge
+                                available</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-medal text-warning me-2"></i>You earned a
+                                badge!</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-comment text-success me-2"></i>New
+                                message from tutor</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item text-center" href="#">View all notifications</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    {% if session.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard') }}">
+                            <i class="fas fa-home me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('chat') }}">
+                            <i class="fas fa-comments me-1"></i>Chat Tutor
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('debug') }}">
+                            <i class="fas fa-bug me-1"></i>Debug Code
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('challenges') }}">
+                            <i class="fas fa-tasks me-1"></i>Challenges
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('progress') }}">
+                            <i class="fas fa-chart-line me-1"></i>Progress
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('features') }}">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('pricing') }}">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('testimonials') }}">Testimonials</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="navbar-nav">
+                    {% if session.user %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center py-2" href="#" id="userDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="avatar avatar-sm bg-primary me-2">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="d-none d-md-inline">Account</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end glass-card mt-2">
+                            <li>
+                                <a class="dropdown-item" href="{{ url_for('profile') }}">
+                                    <i class="fas fa-user-circle me-2"></i>Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ url_for('settings') }}">
+                                    <i class="fas fa-cog me-2"></i>Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-bell me-2"></i>Notifications
+                                    <span class="badge bg-danger rounded-pill float-end">3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-warning" href="{{ url_for('logout') }}">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item me-2">
+                        <a class="nav-link glass-button-outline px-3" href="{{ url_for('login') }}">
+                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link glass-button px-3" href="{{ url_for('signup') }}">
+                            <i class="fas fa-user-plus me-1"></i>Sign Up
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow-1 py-4">
+        <div class="container">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info alert-dismissible fade show glass-alert" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-footer mt-auto">
+        <div class="container">
+            <div class="row py-5">
+                <!-- Company Info -->
+                <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
+                    <div class="footer-brand mb-4">
+                        <a href="{{ url_for('index') }}" class="d-flex align-items-center mb-3 text-decoration-none">
+                            <div class="footer-logo me-2">
+                                <i class="fas fa-robot text-primary"></i>
+                            </div>
+                            <h4 class="mb-0 text-light">AI KumoCoders Coach</h4>
+                        </a>
+                        <p class="text-muted">Learn programming the smart way with AI-powered guidance. Personalized,
+                            adaptive, and fun.</p>
+                    </div>
+                </div>
+
+                <!-- About KumoCoders -->
+                <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
+                    <h4 class="mb-4 text-light">About KumoCoders</h4>
+                    <p class="text-muted">
+                        KumoCoders is a team of passionate developers participating in the AI Hackathon 2025.
+                        United by innovation, creativity, and technology.
+                    </p>
+                </div>
+
+                <!-- Contact Information & Social Links -->
+                <div class="col-lg-4 col-md-12">
+                    <h4 class="text-light mb-4">Connect With Us</h4>
+                    <ul class="list-unstyled mb-4">
+                        <li class="d-flex align-items-center mb-3">
+                            <i class="fas fa-envelope me-3 text-primary"></i>
+                            <span class="text-muted">KumoCoders@outlook.com</span>
+                        </li>
+                        <li class="d-flex align-items-center mb-3">
+                            <i class="fas fa-map-marker-alt me-3 text-primary"></i>
+                            <span class="text-muted">Casablanca, Morocco</span>
+                        </li>
+                    </ul>
+
+                    <div class="social-links">
+                        <a href="https://github.com/KumoCoders" class="social-icon" target="_blank" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com/company/KumoCoders" class="social-icon" target="_blank"
+                            aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://instagram.com/KumoCoders" class="social-icon" target="_blank"
+                            aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://kumocoders.gt.tc" class="social-icon" target="_blank" aria-label="Website">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                        <a href="mailto:KumoCoders@outlook.com" class="social-icon" target="_blank" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom py-4 border-top border-secondary border-opacity-25">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <p class="mb-0 text-muted">
+                            &copy; <span id="currentYear"></span> KumoCoders Team. All rights reserved.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item"><a href="{{ url_for('privacy') }}" class="footer-link">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a href="{{ url_for('terms') }}" class="footer-link">Terms of Service</a></li>
+                            <li class="list-inline-item"><a href="{{ url_for('cookie_policy') }}" class="footer-link">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

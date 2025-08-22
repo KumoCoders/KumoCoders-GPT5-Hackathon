@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="glass-card p-5">
+                <h1 class="text-gradient mb-4">Cookie Policy</h1>
+                <p class="text-muted mb-5">
+                    <strong>Last Updated:</strong> {{ now().strftime("%B %d, %Y") }}
+                </p>
+
+                <div class="cookie-content">
+                    <section class="mb-5">
+                        <h2 class="text-light mb-4">Introduction</h2>
+                        <p class="text-muted">
+                            This Cookie Policy explains how KumoCoders ("we," "us," or "our") uses cookies and similar
+                            technologies to recognize you when you visit our website at
+                            <a href="https://kumocoders.gt.tc" class="text-primary">kumocoders.gt.tc</a>
+                            (the "Site"). It explains what these technologies are and why we use them, as well as
+                            your rights to control our use of them.
+                        </p>
+                        <p class="text-muted">
+                            In some cases we may use cookies to collect personal information, or that becomes
+                            personal information if we combine it with other information. For more information
+                            about how we collect, use, and share personal information, please see our
+                            <a href="{{ url_for('privacy') }}" class="text-primary">Privacy Policy</a>.
+                        </p>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="text-light mb-4">What Are Cookies?</h2>
+                        <p class="text-muted">
+                            Cookies are small data files that are placed on your computer or mobile device when
+                            you visit a website. Cookies are widely used by website owners in order to make
+                            their websites work, or to work more efficiently, as well as to provide reporting
+                            information.
+                        </p>
+                        <p class="text-muted">
+                            Cookies set by the website owner (in this case, KumoCoders) are called "first-party
+                            cookies."
+                            Cookies set by parties other than the website owner are called "third-party cookies."
+                            Third-party cookies enable third-party features or functionality to be provided on
+                            or through the website (e.g., advertising, interactive content, and analytics).
+                            The parties that set these third-party cookies can recognize your computer both
+                            when it visits the website in question and also when it visits certain other websites.
+                        </p>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="text-light mb-4">Why Do We Use Cookies?</h2>
+                        <p class="text-muted">
+                            We use first-party and third-party cookies for several reasons. Some cookies are
+                            required for technical reasons in order for our Site to operate, and we refer to
+                            these as "essential" or "strictly necessary" cookies. Other cookies also enable
+                            us to track and target the interests of our users to enhance the experience on
+                            our Site. Third parties serve cookies through our Site for advertising, analytics,
+                            and other purposes. This is described in more detail below.
+                        </p>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="text-light mb-4">How Do We Use Cookies?</h2>
+                        <p class="text-muted">
+                            We use cookies to help us understand how you use our Site and to improve your
+                            experience. Specifically, we use cookies for the following purposes:
+                        </p>
+
+                        <h5 class="text-light mt-4 mb-3">Essential Cookies</h5>
+                        <p class="text-muted">
+                            These cookies are strictly necessary to provide you with services available through
+                            our Site and to use some of its features, such as access to secure areas.
+                        </p>
+                        <table class="table table-dark table-striped glass-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Purpose</th>
+                                    <th>Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>session</td>
+                                    <td>Maintain your session and authentication status</td>
+                                    <td>Until browser is closed</td>
+                                </tr>
+                                <tr>
+                                    <td>csrf_token</td>
+                                    <td>Protect against Cross-Site Request Forgery attacks</td>
+                                    <td>Until browser is closed</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5 class="text-light mt-4 mb-3">Performance and Analytics Cookies</h5>
+                        <p class="text-muted">
+                            These cookies are used to collect information about traffic to our Site and how
+                            users use our Site. The information gathered does not identify any individual visitor.
+                            It includes the number of visitors to our Site, where visitors have come to the Site
+                            from, and the pages they visited.
+                        </p>
+                        <table class="table table-dark table-striped glass-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Purpose</th>
+                                    <th>Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>_ga</td>
+                                    <td>Distinguish unique users by assigning a randomly generated number</td>
+                                    <td>2 years</td>
+                                </tr>
+                                <tr>
+                                    <td>_gid</td>
+                                    <td>Throttle request rate to limit the collection of data on high traffic sites</td>
+                                    <td>24 hours</td>
+                                </tr>
+                                <tr>
+                                    <td>_gat</td>
+                                    <td>Used to throttle request rate</td>
+                                    <td>1 minute</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5 class="text-light mt-4 mb-3">Functionality Cookies</h5>
+                        <p class="text-muted">
+                            These cookies allow our Site to remember choices you make when you use our Site,
+                            such as remembering your language preferences, your login details, and the changes
+                            you make to pages on the Site which you customize. These cookies also enable
+                            enhanced, more personalized features, such as watching videos and sharing content
+                            on social media platforms.
+                        </p>
+                        <table class="table table-dark table-striped glass-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Purpose</th>
+                                    <th>Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>preferences</td>
+                                    <td>Remember your preferences and customization choices</td>
+                                    <td>1 year</td>
+                                </tr>
+                                <tr>
+                                    <td>theme</td>
+                                    <td>Remember your selected theme (dark/light mode)</td>
+                                    <td>1 year</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5 class="text-light mt-4 mb-3">Targeting and Advertising Cookies</h5>
+                        <p class="text-muted">
+                            These cookies record your visit to our Site, the pages you have visited, and the
+                            links you have followed. We will use this information to make our Site and the
+                            advertising displayed on it more relevant to your interests. We may also share
+                            this information with third parties for this purpose.
+                        </p>
+                        <table class="table table-dark table-striped glass-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Purpose</th>
+                                    <th>Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>_fbp</td>
+                                    <td>Used by Facebook to deliver a series of advertisement products</td>
+                                    <td>3 months</td>
+                                </tr>
+                                <tr>
+                                    <td>_gcl_au</td>
+                                    <td>Used by Google AdSense for experimenting with advertisement efficiency</td>
+                                    <td>3 months</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="text-light mb-4">Control Over Cookies</h2>
+                        <p class="text-muted">
+                            You have the right to decide whether to accept or reject cookies. You can set or
+                            amend your web browser controls to accept or refuse cookies. If you choose to
+                            reject cookies, you may still use our Site though your access to some functionality
+                            and areas of our Site may be restricted.
+                        </p>
+                        <p class="text-muted">
+                            You can usually activate or deactivate cookies by adjusting the settings in your
+                            internet browser. For more information about how to manage cookies, visit
+                            <a href="http://www.allaboutcookies.org" class="text-primary"
+                                target="_blank">www.allaboutcookies.org</a>.
+                        </p>
+                        <p class="text-muted">
+                            Additionally, most advertising networks offer you a way to opt out of targeted advertising.
+                            If you would like to find out more information, please visit:
+                        </p>
+                        <ul class="text-muted">
+                            <li><a href="http://www.aboutads.info/choices/" class="text-primary" target="_blank">Digital
+                                    Advertising Alliance</a></li>
+                            <li><a href="http://www.youronlinechoices.com" class="text-primary" target="_blank">European
+                                    Interactive Digital Advertising Alliance</a></li>
+                        </ul>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="text-light mb-4">How Often Will We Update This Cookie Policy?</h2>
+                        <p class="text-muted">
+                            We may update this Cookie Policy from time to time in order to reflect, for example,
+                            changes to the cookies we use or for other operational, legal or regulatory reasons.
+                            Please therefore revisit this Cookie Policy regularly to stay informed about our
+                            use of cookies and related technologies.
+                        </p>
+                        <p class="text-muted">
+                            The date at the top of this Cookie Policy indicates when it was last updated.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-light mb-4">Where Can You Get Further Information?</h2>
+                        <p class="text-muted">
+                            If you have any questions about our use of cookies or other technologies, please
+                            email us at
+                            <a href="mailto:KumoCoders@outlook.com" class="text-primary">KumoCoders@outlook.com</a>
+                            or by writing to us at:
+                        </p>
+                        <address class="text-muted">
+                            KumoCoders Team<br>
+                            Casablanca, Morocco<br>
+                            <a href="https://kumocoders.gt.tc" class="text-primary">https://kumocoders.gt.tc</a>
+                        </address>
+                        <div class="mt-4">
+                            <h6 class="text-light mb-3">About KumoCoders</h6>
+                            <p class="text-muted small">
+                                KumoCoders is a team of 6 passionate developers headquartered in Casablanca, Morocco,
+                                participating in the AI Hackathon 2025. We are united by innovation, creativity,
+                                and technology to build AI-powered solutions for education.
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

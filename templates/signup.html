@@ -1,0 +1,322 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="form-container glass-card">
+                <h2 class="form-title">Create Your Account</h2>
+
+                <form id="signupForm" method="POST" action="{{ url_for('signup') }}">
+                    <div class="form-group">
+                        <label for="name" class="text-light mb-2">Full Name</label>
+                        <input type="text" class="form-control glass-input" id="name" name="name"
+                            placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="text-light mb-2">Email Address</label>
+                        <input type="email" class="form-control glass-input" id="email" name="email"
+                            placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="text-light mb-2">Password</label>
+                        <input type="password" class="form-control glass-input" id="password" name="password"
+                            placeholder="Create a password" required minlength="6">
+                        <div class="form-text text-muted mt-2">
+                            <small>Password must be at least 6 characters long</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword" class="text-light mb-2">Confirm Password</label>
+                        <input type="password" class="form-control glass-input" id="confirmPassword"
+                            name="confirmPassword" placeholder="Confirm your password" required>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="terms" required>
+                        <label class="form-check-label text-muted" for="terms">
+                            I agree to the <a href="{{ url_for('terms') }}" class="text-primary">Terms of Service</a> and <a href="{{ url_for('privacy') }}"
+                                class="text-primary">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 glass-button">
+                        <i class="fas fa-user-plus me-2"></i>Create Account
+                    </button>
+                </form>
+
+                <div class="divider my-4 text-muted">OR SIGN UP WITH</div>
+
+                <div class="social-providers-grid mb-4">
+                    <button class="btn glass-button-outline social-btn" id="googleSignup" title="Sign up with Google">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="githubSignup" title="Sign up with GitHub">
+                        <i class="fab fa-github"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="facebookSignup"
+                        title="Sign up with Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="microsoftSignup"
+                        title="Sign up with Microsoft">
+                        <i class="fab fa-microsoft"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="appleSignup" title="Sign up with Apple">
+                        <i class="fab fa-apple"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="yahooSignup" title="Sign up with Yahoo">
+                        <i class="fab fa-yahoo"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="anonymousSignup"
+                        title="Sign up Anonymously">
+                        <i class="fas fa-user-secret"></i>
+                    </button>
+                </div>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted">
+                        Already have an account? <a href="{{ url_for('login') }}" class="text-primary">Sign In</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase SDK - FIXED CDN LINKS (removed extra spaces) -->
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-auth-compat.js"></script>
+
+<script>
+    // Check if firebaseConfig exists and is valid
+    const firebaseConfigStr = '{{ firebase_config|safe }}';
+    let auth;
+    let firebaseInitialized = false;
+
+    // Only initialize Firebase if config is valid
+    if (firebaseConfigStr && firebaseConfigStr !== 'null' && typeof firebaseConfigStr === 'string' && firebaseConfigStr.includes('apiKey')) {
+        try {
+            const firebaseConfig = JSON.parse(firebaseConfigStr);
+
+            // Validate API key length (basic check)
+            if (firebaseConfig.apiKey && firebaseConfig.apiKey.length > 20) {
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                auth = firebase.auth();
+                firebaseInitialized = true;
+                console.log("Firebase initialized successfully");
+            } else {
+                console.warn("Invalid Firebase API key detected (too short)");
+            }
+        } catch (error) {
+            console.error("Error parsing Firebase config:", error);
+        }
+    } else {
+        console.warn("Firebase configuration not found, invalid, or not a string.");
+    }
+
+    // Provider setup functions
+    function setupGoogleProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('profile');
+        provider.addScope('email');
+        return provider;
+    }
+
+    function setupFacebookProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.FacebookAuthProvider();
+        provider.addScope('public_profile');
+        provider.addScope('email');
+        return provider;
+    }
+
+    function setupGithubProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.GithubAuthProvider();
+        provider.addScope('read:user');
+        provider.addScope('user:email');
+        return provider;
+    }
+
+    function setupMicrosoftProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.OAuthProvider('microsoft.com');
+        provider.addScope('User.Read');
+        return provider;
+    }
+
+    function setupYahooProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.OAuthProvider('yahoo.com');
+        return provider;
+    }
+
+    function setupAppleProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.OAuthProvider('apple.com');
+        return provider;
+    }
+
+    // Sign in with popup helper function
+    function signInWithPopup(provider) {
+        if (!firebaseInitialized || !provider) {
+            alert("Client-side authentication is not available.\nPlease ensure Firebase is configured correctly or use the email/password form.");
+            return;
+        }
+
+        auth.signInWithPopup(provider)
+            .then((result) => {
+                // Signed in successfully
+                window.location.href = "{{ url_for('onboard') }}";
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                if (errorCode === 'auth/account-exists-with-different-credential') {
+                    alert("An account already exists with this email.\nPlease sign in with your original provider.");
+                } else {
+                    alert("Authentication Error: " + errorMessage);
+                }
+            });
+    }
+
+    // Form submission handler
+    if (firebaseInitialized) {
+        document.getElementById('signupForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Create user with email and password
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+
+                    // Update user profile with display name
+                    return user.updateProfile({
+                        displayName: name
+                    });
+                })
+                .then(() => {
+                    // Profile updated successfully
+                    window.location.href = "{{ url_for('onboard') }}";
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    // Handle specific errors
+                    if (errorCode === 'auth/email-already-in-use') {
+                        alert("This email is already registered.\nPlease sign in instead.");
+                    } else if (errorCode === 'auth/invalid-email') {
+                        alert("Please enter a valid email address.");
+                    } else if (errorCode === 'auth/weak-password') {
+                        alert("Password should be at least 6 characters.");
+                    } else {
+                        alert("Signup Error: " + errorMessage);
+                    }
+                });
+        });
+
+        // Event listeners for all providers
+        document.getElementById('googleSignup').addEventListener('click', function () {
+            const provider = setupGoogleProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('facebookSignup').addEventListener('click', function () {
+            const provider = setupFacebookProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('githubSignup').addEventListener('click', function () {
+            const provider = setupGithubProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('microsoftSignup').addEventListener('click', function () {
+            const provider = setupMicrosoftProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('yahooSignup').addEventListener('click', function () {
+            const provider = setupYahooProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('appleSignup').addEventListener('click', function () {
+            const provider = setupAppleProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('anonymousSignup').addEventListener('click', function () {
+            auth.signInAnonymously()
+                .then(() => {
+                    // Signed in anonymously
+                    window.location.href = "{{ url_for('onboard') }}";
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert("Anonymous Sign-in Error: " + errorMessage);
+                });
+        });
+    } else {
+        console.log("Firebase not available, using server-side authentication");
+
+        // Add click handlers for buttons to show error message
+        const providerButtons = [
+            'googleSignup', 'githubSignup', 'facebookSignup',
+            'microsoftSignup', 'appleSignup', 'yahooSignup', 'anonymousSignup'
+        ];
+
+        providerButtons.forEach(buttonId => {
+            const button = document.getElementById(buttonId);
+            if (button) {
+                button.addEventListener('click', function () {
+                    alert("Client-side authentication (via Google, GitHub, etc.) is not available.\n\nPossible reasons:\n- Firebase configuration is missing or incorrect\n- Required authentication providers are not enabled in Firebase Console\n- This domain is not authorized in Firebase settings\n\nPlease use the email/password form or contact support.");
+                });
+            }
+        });
+    }
+</script>
+
+<style>
+    .social-providers-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    .social-btn {
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 576px) {
+        .social-providers-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>
+{% endblock %}

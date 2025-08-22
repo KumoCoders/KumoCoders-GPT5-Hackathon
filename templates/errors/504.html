@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center align-items-center min-vh-75">
+        <div class="col-lg-8">
+            <div class="error-page glass-card text-center p-5">
+                <div class="error-icon mb-4">
+                    <i class="fas fa-clock text-warning fa-5x"></i>
+                </div>
+                <h1 class="display-1 fw-bold text-gradient mb-3">504</h1>
+                <h2 class="mb-4">Gateway Timeout</h2>
+                <p class="lead text-white-75 mb-5">
+                    The server was acting as a gateway or proxy and did not receive a timely response from the upstream
+                    server.<br>
+                    This is usually a temporary issue. Please try again in a few minutes.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg glass-button">
+                        <i class="fas fa-home me-2"></i>Go Home
+                    </a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary btn-lg glass-button-outline">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                    <a href="mailto:KumoCoders@outlook.com" class="btn btn-info btn-lg glass-button">
+                        <i class="fas fa-envelope me-2"></i>Contact Support
+                    </a>
+                </div>
+                <div class="mt-5">
+                    <h6 class="text-light mb-3">While we fix this, explore:</h6>
+                    <div class="d-flex flex-wrap justify-content-center gap-2">
+                        <a href="{{ url_for('features') }}"
+                            class="badge bg-primary bg-opacity-25 text-primary">Features</a>
+                        <a href="{{ url_for('pricing') }}"
+                            class="badge bg-success bg-opacity-25 text-success">Pricing</a>
+                        <a href="{{ url_for('team') }}" class="badge bg-info bg-opacity-25 text-info">Team</a>
+                        <a href="{{ url_for('challenges') }}"
+                            class="badge bg-warning bg-opacity-25 text-warning">Challenges</a>
+                        <a href="{{ url_for('debug') }}" class="badge bg-danger bg-opacity-25 text-danger">Debug
+                            Code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .error-page {
+        background: rgba(30, 41, 59, 0.9);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: var(--border-radius-xl);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .error-page::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+        z-index: -1;
+        border-radius: var(--border-radius-xl);
+    }
+
+    .error-icon {
+        animation: pulse 2s infinite;
+    }
+
+    .min-vh-75 {
+        min-height: 75vh;
+    }
+
+    @media (max-width: 576px) {
+        .error-page {
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+        }
+
+        .display-1 {
+            font-size: 3rem;
+        }
+
+        .btn-lg {
+            padding: 0.7rem 1.5rem;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+{% endblock %}

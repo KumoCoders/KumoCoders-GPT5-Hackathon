@@ -1,0 +1,293 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="form-container glass-card">
+                <h2 class="form-title">Sign In to Your Account</h2>
+
+                <form id="loginForm" method="POST" action="{{ url_for('login') }}">
+                    <div class="form-group">
+                        <label for="email" class="text-light mb-2">Email Address</label>
+                        <input type="email" class="form-control glass-input" id="email" name="email"
+                            placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="text-light mb-2">Password</label>
+                        <input type="password" class="form-control glass-input" id="password" name="password"
+                            placeholder="Enter your password" required>
+                        <div class="form-text text-muted mt-2">
+                            <small><a href="#" class="text-primary">Forgot password?</a></small>
+                        </div>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="remember">
+                        <label class="form-check-label text-muted" for="remember">
+                            Remember me
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 glass-button">
+                        <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                    </button>
+                </form>
+
+                <div class="divider my-4 text-muted">OR SIGN IN WITH</div>
+
+                <div class="social-providers-grid mb-4">
+                    <button class="btn glass-button-outline social-btn" id="googleLogin" title="Sign in with Google">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="githubLogin" title="Sign in with GitHub">
+                        <i class="fab fa-github"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="facebookLogin"
+                        title="Sign in with Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="microsoftLogin"
+                        title="Sign in with Microsoft">
+                        <i class="fab fa-microsoft"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="appleLogin" title="Sign in with Apple">
+                        <i class="fab fa-apple"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="yahooLogin" title="Sign in with Yahoo">
+                        <i class="fab fa-yahoo"></i>
+                    </button>
+                    <button class="btn glass-button-outline social-btn" id="anonymousLogin" title="Sign in Anonymously">
+                        <i class="fas fa-user-secret"></i>
+                    </button>
+                </div>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted">
+                        Don't have an account? <a href="{{ url_for('signup') }}" class="text-primary">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase SDK - FIXED CDN LINKS (removed extra spaces) -->
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-auth-compat.js"></script>
+
+<script>
+    // Check if firebaseConfig exists and is valid
+    const firebaseConfigStr = '{{ firebase_config|safe }}';
+    let auth;
+    let firebaseInitialized = false;
+
+    // Only initialize Firebase if config is valid
+    if (firebaseConfigStr && firebaseConfigStr !== 'null' && typeof firebaseConfigStr === 'string' && firebaseConfigStr.includes('apiKey')) {
+        try {
+            const firebaseConfig = JSON.parse(firebaseConfigStr);
+
+            // Validate API key length
+            if (firebaseConfig.apiKey && firebaseConfig.apiKey.length > 20) {
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                auth = firebase.auth();
+                firebaseInitialized = true;
+                console.log("Firebase initialized successfully");
+            } else {
+                console.warn("Invalid Firebase API key detected (too short)");
+            }
+        } catch (error) {
+            console.error("Error parsing Firebase config:", error);
+        }
+    } else {
+        console.warn("Firebase configuration not found, invalid, or not a string.");
+    }
+
+    // Provider setup functions
+    function setupGoogleProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('profile');
+        provider.addScope('email');
+        return provider;
+    }
+
+    function setupFacebookProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.FacebookAuthProvider();
+        provider.addScope('public_profile');
+        provider.addScope('email');
+        return provider;
+    }
+
+    function setupGithubProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.GithubAuthProvider();
+        provider.addScope('read:user');
+        provider.addScope('user:email');
+        return provider;
+    }
+
+    function setupMicrosoftProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.OAuthProvider('microsoft.com');
+        provider.addScope('User.Read');
+        return provider;
+    }
+
+    function setupYahooProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.OAuthProvider('yahoo.com');
+        return provider;
+    }
+
+    function setupAppleProvider() {
+        if (!firebaseInitialized) return null;
+        const provider = new firebase.auth.OAuthProvider('apple.com');
+        return provider;
+    }
+
+    // Sign in with popup helper function
+    function signInWithPopup(provider) {
+        if (!firebaseInitialized || !provider) {
+            alert("Client-side authentication is not available.\nPlease ensure Firebase is configured correctly or use the email/password form.");
+            return;
+        }
+
+        auth.signInWithPopup(provider)
+            .then((result) => {
+                // Signed in successfully
+                window.location.href = "{{ url_for('dashboard') }}";
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                if (errorCode === 'auth/account-exists-with-different-credential') {
+                    alert("An account already exists with this email.\nPlease sign in with your original provider.");
+                } else {
+                    alert("Authentication Error: " + errorMessage);
+                }
+            });
+    }
+
+    // Form submission handler
+    if (firebaseInitialized) {
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Sign in with email and password
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log("Signed in user:", user);
+                    window.location.href = "{{ url_for('dashboard') }}";
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    // Handle specific errors
+                    if (errorCode === 'auth/user-not-found') {
+                        alert("No user found with this email.\nPlease check your email or sign up for a new account.");
+                    } else if (errorCode === 'auth/wrong-password') {
+                        alert("Incorrect password.\nPlease try again or reset your password.");
+                    } else if (errorCode === 'auth/invalid-email') {
+                        alert("Please enter a valid email address.");
+                    } else {
+                        alert("Login Error: " + errorMessage);
+                    }
+                });
+        });
+
+        // Event listeners for all providers
+        document.getElementById('googleLogin').addEventListener('click', function () {
+            const provider = setupGoogleProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('facebookLogin').addEventListener('click', function () {
+            const provider = setupFacebookProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('githubLogin').addEventListener('click', function () {
+            const provider = setupGithubProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('microsoftLogin').addEventListener('click', function () {
+            const provider = setupMicrosoftProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('yahooLogin').addEventListener('click', function () {
+            const provider = setupYahooProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('appleLogin').addEventListener('click', function () {
+            const provider = setupAppleProvider();
+            signInWithPopup(provider);
+        });
+
+        document.getElementById('anonymousLogin').addEventListener('click', function () {
+            auth.signInAnonymously()
+                .then(() => {
+                    // Signed in anonymously
+                    window.location.href = "{{ url_for('dashboard') }}";
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert("Anonymous Sign-in Error: " + errorMessage);
+                });
+        });
+    } else {
+        console.log("Firebase not available, using server-side authentication");
+
+        // Add click handlers for buttons to show error message
+        const providerButtons = [
+            'googleLogin', 'githubLogin', 'facebookLogin',
+            'microsoftLogin', 'appleLogin', 'yahooLogin', 'anonymousLogin'
+        ];
+
+        providerButtons.forEach(buttonId => {
+            const button = document.getElementById(buttonId);
+            if (button) {
+                button.addEventListener('click', function () {
+                    alert("Client-side authentication (via Google, GitHub, etc.) is not available.\n\nPossible reasons:\n- Firebase configuration is missing or incorrect\n- Required authentication providers are not enabled in Firebase Console\n- This domain is not authorized in Firebase settings\n\nPlease use the email/password form or contact support.");
+                });
+            }
+        });
+    }
+</script>
+
+<style>
+    .social-providers-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    .social-btn {
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 576px) {
+        .social-providers-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>
+{% endblock %}

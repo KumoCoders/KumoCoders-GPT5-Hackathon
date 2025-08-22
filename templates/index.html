@@ -1,0 +1,455 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section with Glass Effect -->
+<section class="hero-section py-5 mb-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h1 class="display-3 fw-bold mb-4">
+                    <span class="text-gradient">AI-Powered</span><br>
+                    <span class="text-white">Programming Coach</span>
+                </h1>
+                <p class="lead text-white-75 mb-5">
+                    Transform your learning journey with personalized AI guidance. From beginner to expert,
+                    we adapt to your pace and style with cutting-edge technology.
+                </p>
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    {% if not session.user %}
+                    <a href="{{ url_for('signup') }}" class="btn btn-light btn-lg glass-button">
+                        <i class="fas fa-rocket me-2"></i>Start Learning Free
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg glass-button-outline">
+                        <i class="fas fa-play-circle me-2"></i>Watch Demo
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-light btn-lg glass-button">
+                        <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="d-flex align-items-center mt-4">
+                    <div class="avatar bg-success rounded-circle p-2 me-3">
+                        <i class="fas fa-check text-white"></i>
+                    </div>
+                    <p class="text-white-75 mb-0">
+                        <strong>10,000+</strong> developers have started their journey with us
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-card glass-card p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="avatar bg-primary rounded-circle p-2 me-3">
+                            <i class="fas fa-robot text-white"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-white">AI Assistant</h6>
+                            <small class="text-white-50">Online Now</small>
+                        </div>
+                    </div>
+                    <div class="chat-bubble chat-ai mb-4" id="aiResponse">
+                        <p class="mb-0">Hi there! I'm your AI programming coach. Ready to start your coding journey? Ask
+                            me anything about Python, JavaScript, or web development!</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="avatar bg-success rounded-circle p-2 me-3">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="input-group">
+                                <input type="text" class="form-control glass-input" id="userQuestion"
+                                    placeholder="Ask me anything about coding...">
+                                <button class="btn glass-button" type="button" id="askAIButton">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Trusted By Section -->
+<section class="trusted-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h3 class="text-white mb-4">Trusted by Industry Leaders</h3>
+            <p class="text-white-75 mb-0">Built in partnership with leading AI and technology companies</p>
+        </div>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-6 col-md-3 text-center mb-4 mb-md-0">
+                <img src="{{ url_for('static', filename='img/lablab-logo.png') }}" alt="LabLab.AI"
+                    class="brand-logo img-fluid" style="filter: invert(100%);">
+            </div>
+            <div class="col-6 col-md-3 text-center mb-4 mb-md-0">
+                <img src="{{ url_for('static', filename='img/natively-logo.png') }}" alt="NativelyAI"
+                    class="brand-logo img-fluid" style="filter: brightness(0) invert(1);">
+            </div>
+            <div class="col-6 col-md-3 text-center mb-4 mb-md-0">
+                <img src="{{ url_for('static', filename='img/aimlapi-logo.png') }}" alt="AI/ML API"
+                    class="brand-logo img-fluid" style="filter: invert(100%);">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-card glass-card p-4">
+                    <h2 class="text-primary mb-2">15K+</h2>
+                    <p class="text-white-75 mb-0">Active Learners</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-card glass-card p-4">
+                    <h2 class="text-success mb-2">75K+</h2>
+                    <p class="text-white-75 mb-0">Lines of Code</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-card glass-card p-4">
+                    <h2 class="text-warning mb-2">150+</h2>
+                    <p class="text-white-75 mb-0">Programming Topics</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-card glass-card p-4">
+                    <h2 class="text-info mb-2">98%</h2>
+                    <p class="text-white-75 mb-0">Success Rate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">Why Choose <span class="text-gradient">AI Programming Coach</span>?</h2>
+            <p class="lead text-white-75">Experience the future of programming education with our cutting-edge AI
+                platform</p>
+        </div>
+        <div class="row g-4">
+            <!-- Feature 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card glass-card h-100 p-4">
+                    <div class="feature-icon bg-primary bg-opacity-10 rounded-3 p-3 d-inline-block mb-4">
+                        <i class="fas fa-brain fa-2x text-primary"></i>
+                    </div>
+                    <h5 class="card-title mb-3">AI-Powered Tutor</h5>
+                    <p class="text-white-75 mb-4">
+                        Get step-by-step explanations, debugging help, and project ideas tailored to your skill level
+                        with GPT-5 technology.
+                    </p>
+                    <div
+                        class="feature-badge bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-pill d-inline-block">
+                        <small><i class="fas fa-star me-1"></i>Most Popular</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card glass-card h-100 p-4">
+                    <div class="feature-icon bg-success bg-opacity-10 rounded-3 p-3 d-inline-block mb-4">
+                        <i class="fas fa-route fa-2x text-success"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Adaptive Learning Paths</h5>
+                    <p class="text-white-75 mb-4">
+                        Dynamic learning plans that evolve with your progress and preferences, ensuring optimal learning
+                        experience.
+                    </p>
+                    <div
+                        class="feature-badge bg-success bg-opacity-10 text-success px-3 py-1 rounded-pill d-inline-block">
+                        <small><i class="fas fa-sync me-1"></i>Adaptive</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card glass-card h-100 p-4">
+                    <div class="feature-icon bg-warning bg-opacity-10 rounded-3 p-3 d-inline-block mb-4">
+                        <i class="fas fa-gamepad fa-2x text-warning"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Gamified Experience</h5>
+                    <p class="text-white-75 mb-4">
+                        Earn badges, track progress, and stay motivated with interactive challenges and leaderboards.
+                    </p>
+                    <div
+                        class="feature-badge bg-warning bg-opacity-10 text-warning px-3 py-1 rounded-pill d-inline-block">
+                        <small><i class="fas fa-trophy me-1"></i>Rewarding</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card glass-card h-100 p-4">
+                    <div class="feature-icon bg-info bg-opacity-10 rounded-3 p-3 d-inline-block mb-4">
+                        <i class="fas fa-code fa-2x text-info"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Code Debugger</h5>
+                    <p class="text-white-75 mb-4">
+                        Paste your code and get instant feedback on bugs, best practices, and optimization suggestions.
+                    </p>
+                    <div class="feature-badge bg-info bg-opacity-10 text-info px-3 py-1 rounded-pill d-inline-block">
+                        <small><i class="fas fa-bug me-1"></i>Real-time</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card glass-card h-100 p-4">
+                    <div class="feature-icon bg-danger bg-opacity-10 rounded-3 p-3 d-inline-block mb-4">
+                        <i class="fas fa-tasks fa-2x text-danger"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Mini Challenges</h5>
+                    <p class="text-white-75 mb-4">
+                        Practice with AI-generated coding tasks that match your skill level.
+                    </p>
+                    <div
+                        class="feature-badge bg-danger bg-opacity-10 text-danger px-3 py-1 rounded-pill d-inline-block">
+                        <small><i class="fas fa-fire me-1"></i>Challenging</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card glass-card h-100 p-4">
+                    <div class="feature-icon bg-secondary bg-opacity-10 rounded-3 p-3 d-inline-block mb-4">
+                        <i class="fas fa-cloud fa-2x text-secondary"></i>
+                    </div>
+                    <h5 class="card-title mb-3">Cloud Sync</h5>
+                    <p class="text-white-75 mb-4">
+                        Access your profile, progress, and history from any device with Firebase cloud synchronization.
+                    </p>
+                    <div
+                        class="feature-badge bg-secondary bg-opacity-10 text-secondary px-3 py-1 rounded-pill d-inline-block">
+                        <small><i class="fas fa-sync-alt me-1"></i>Cross-platform</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">How It <span class="text-gradient">Works</span></h2>
+            <p class="lead text-white-75">Start your programming journey in just 3 simple steps</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="step-card glass-card text-center p-5 h-100">
+                    <div class="step-number bg-primary text-white mx-auto mb-4 d-flex align-items-center justify-content-center"
+                        style="width: 70px; height: 70px; font-size: 1.8rem; font-weight: bold;">
+                        1
+                    </div>
+                    <h5 class="mb-4">Create Your Profile</h5>
+                    <p class="text-white-75">
+                        Tell us your current skill level, learning goals, and preferred resources.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card glass-card text-center p-5 h-100">
+                    <div class="step-number bg-success text-white mx-auto mb-4 d-flex align-items-center justify-content-center"
+                        style="width: 70px; height: 70px; font-size: 1.8rem; font-weight: bold;">
+                        2
+                    </div>
+                    <h5 class="mb-4">Get Personalized Path</h5>
+                    <p class="text-white-75">
+                        Receive a custom learning plan with resources and challenges tailored to you.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card glass-card text-center p-5 h-100">
+                    <div class="step-number bg-warning text-white mx-auto mb-4 d-flex align-items-center justify-content-center"
+                        style="width: 70px; height: 70px; font-size: 1.8rem; font-weight: bold;">
+                        3
+                    </div>
+                    <h5 class="mb-4">Start Learning & Grow</h5>
+                    <p class="text-white-75">
+                        Practice with AI tutor, complete challenges, and track your progress.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">What Our <span class="text-gradient">Learners Say</span></h2>
+            <p class="lead text-white-75">Join thousands of developers who transformed their skills</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="testimonial-card glass-card p-4">
+                    <div class="d-flex mb-3">
+                        <div class="avatar bg-primary rounded-circle p-2 me-3">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Sarah Johnson</h6>
+                            <small class="text-muted">Frontend Developer</small>
+                        </div>
+                    </div>
+                    <p class="text-muted mb-3">
+                        "This platform helped me transition from beginner to junior developer in just 3 months.
+                        The AI tutor is incredibly patient and helpful!"
+                    </p>
+                    <div class="rating text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card glass-card p-4">
+                    <div class="d-flex mb-3">
+                        <div class="avatar bg-success rounded-circle p-2 me-3">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Mike Chen</h6>
+                            <small class="text-muted">Data Scientist</small>
+                        </div>
+                    </div>
+                    <p class="text-muted mb-3">
+                        "As someone switching careers, this was exactly what I needed. The adaptive learning
+                        path kept me engaged and challenged at the right level."
+                    </p>
+                    <div class="rating text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card glass-card p-4">
+                    <div class="d-flex mb-3">
+                        <div class="avatar bg-info rounded-circle p-2 me-3">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Alex Rodriguez</h6>
+                            <small class="text-muted">Computer Science Student</small>
+                        </div>
+                    </div>
+                    <p class="text-muted mb-3">
+                        "The debugging feature alone is worth it! It catches errors I would have spent hours
+                        trying to find. Plus, the explanations are crystal clear."
+                    </p>
+                    <div class="rating text-warning">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="cta-card glass-card text-center p-5">
+            <h2 class="display-5 fw-bold mb-4">Ready to Start Your <span class="text-gradient">Programming
+                    Journey</span>?</h2>
+            <p class="lead text-white-75 mb-4">
+                Join thousands of learners who are already transforming their careers with AI-powered education.
+            </p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                {% if not session.user %}
+                <a href="{{ url_for('signup') }}" class="btn btn-primary btn-lg glass-button">
+                    <i class="fas fa-rocket me-2"></i>Get Started Free
+                </a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg glass-button-outline">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login to Continue
+                </a>
+                {% else %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg glass-button">
+                    <i class="fas fa-tachometer-alt me-2"></i>Continue Learning
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AI Chat Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const askButton = document.getElementById('askAIButton');
+        const userInput = document.getElementById('userQuestion');
+        const aiResponse = document.getElementById('aiResponse');
+
+        if (askButton && userInput && aiResponse) {
+            askButton.addEventListener('click', async function () {
+                const question = userInput.value.trim();
+                if (!question) return;
+
+                // Show loading state
+                const originalHTML = aiResponse.innerHTML;
+                aiResponse.innerHTML = '<p class="mb-0"><i class="fas fa-spinner fa-spin me-2"></i>Thinking...</p>';
+                askButton.disabled = true;
+
+                try {
+                    const response = await fetch('/ask-ai', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ question: question })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        aiResponse.innerHTML = `<p class="mb-0">${data.answer}</p>`;
+                    } else {
+                        aiResponse.innerHTML = '<p class="mb-0 text-danger">Sorry, I encountered an error. Please try again.</p>';
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    aiResponse.innerHTML = '<p class="mb-0 text-danger">Sorry, I encountered an error. Please try again.</p>';
+                } finally {
+                    askButton.disabled = false;
+                    userInput.value = '';
+                }
+            });
+
+            // Allow pressing Enter to submit
+            userInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    askButton.click();
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
