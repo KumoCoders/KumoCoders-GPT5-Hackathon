@@ -384,10 +384,10 @@ def method_not_allowed(error):
 def too_many_requests(error):
     return render_template('errors/429.html'), 429
 
-@app.errorhandler(500)
-def internal_error(error):
-    app.logger.error(f"Server Error: {error}")
-    return render_template('errors/500.html'), 500
+# @app.errorhandler(500)
+# def internal_error(error):
+#     app.logger.error(f"Server Error: {error}")
+#     return render_template('errors/500.html'), 500
 
 @app.errorhandler(502)
 def bad_gateway(error):
