@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Quiz - 30 Questions</title>
+  <style>
+      /* Your color palette and styles */
+      :root { 
+          --primary-color: #3b82f6;
+          --primary-dark: #1d4ed8;
+          --primary-light: #93c5fd;
+          --secondary-color: #64748b;
+          --success-color: #10b981;
+          --info-color: #06b6d4;
+          --warning-color: #f59e0b;
+          --danger-color: #ef4444;
+          --dark-bg: #0f172a;
+          --darker-bg: #0b1120;
+          --darkest-bg: #020617;
+          --light-text: #f1f5f9;
+          --muted-text: #94a3b8;
+          --card-bg: #1e293b;
+          --card-border: rgba(148, 163, 184, 0.15);
+          --glass-bg: rgba(15, 23, 42, 0.75);
+          --glass-border: rgba(148, 163, 184, 0.2);
+          --glass-highlight: rgba(56, 189, 248, 0.2);
+          --glass-accent: rgba(99, 102, 241, 0.25);
+          --glass-glow: rgba(59, 130, 246, 0.1);
+          --border-radius-lg: 20px;
+          --border-radius-md: 16px;
+          --border-radius-sm: 12px;
+          --border-radius-xs: 8px;
+          --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.4);
+          --font-main: "Poppins", sans-serif;
+          --font-weight-medium: 500;
+          --font-weight-bold: 700;
+          --spacing-sm: 1rem;
+          --spacing-md: 1.5rem;
+          --spacing-lg: 2rem;
+          --spacing-xl: 3rem;
+          --transition-medium: 0.3s ease;
+      }
+
+      body {
+          background: linear-gradient(to bottom right, var(--darkest-bg), var(--darker-bg));
+          color: var(--light-text);
+          font-family: var(--font-main);
+          line-height: 1.6;
+          min-height: 100vh;
+          padding: var(--spacing-md);
+      }
+
+      .container {
+          max-width: 900px;
+          margin: 0 auto;
+          padding: var(--spacing-lg);
+      }
+
+      .header {
+          text-align: center;
+          margin-bottom: var(--spacing-xl);
+      }
+
+      h1 {
+          font-size: 2.5rem;
+          margin-bottom: var(--spacing-sm);
+          background: linear-gradient(to right, var(--primary-color), var(--info-color));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-weight: var(--font-weight-bold);
+      }
+
+      .subtitle {
+          color: var(--muted-text);
+          margin-bottom: var(--spacing-lg);
+      }
+
+      .quiz-form {
+          background: var(--glass-bg);
+          border: 1px solid var(--glass-border);
+          border-radius: var(--border-radius-lg);
+          padding: var(--spacing-lg);
+          box-shadow: var(--shadow-xl);
+      }
+
+      .form-group {
+          margin-bottom: var(--spacing-md);
+          padding: var(--spacing-md);
+          background: var(--card-bg);
+          border-radius: var(--border-radius-md);
+          border-left: 4px solid var(--primary-color);
+      }
+
+      .question-text {
+          font-size: 1.1rem;
+          font-weight: var(--font-weight-medium);
+          margin-bottom: var(--spacing-sm);
+      }
+
+      .options-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: var(--spacing-sm);
+      }
+
+      .option-item {
+          display: flex;
+          align-items: center;
+          padding: var(--spacing-sm);
+          background: rgba(30, 41, 59, 0.5);
+          border-radius: var(--border-radius-sm);
+          transition: var(--transition-medium);
+          cursor: pointer;
+      }
+
+      .option-item:hover {
+          background: var(--glass-highlight);
+          transform: translateY(-2px);
+      }
+
+      .option-item input {
+          margin-right: var(--spacing-sm);
+          accent-color: var(--primary-color);
+      }
+
+      .form-actions {
+          text-align: center;
+          margin-top: var(--spacing-xl);
+      }
+
+      .btn {
+          padding: var(--spacing-sm) var(--spacing-lg);
+          border: none;
+          border-radius: var(--border-radius-md);
+          font-weight: var(--font-weight-medium);
+          cursor: pointer;
+          transition: var(--transition-medium);
+          font-size: 1rem;
+      }
+
+      .btn-primary {
+          background: var(--primary-color);
+          color: white;
+      }
+
+      .btn-primary:hover {
+          background: var(--primary-dark);
+          transform: translateY(-2px);
+      }
+
+      .result {
+          text-align: center;
+          font-size: 1.5rem;
+          font-weight: var(--font-weight-bold);
+          margin-top: var(--spacing-lg);
+      }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>🐍 Python Quiz</h1>
+      <p class="subtitle">30 Questions to test your Python knowledge</p>
+    </header>
+
+    <form id="quizForm" class="quiz-form">
+      <!-- Questions -->
+      <div id="questions"></div>
+
+      <div class="form-actions">
+        <button type="reset" class="btn btn-primary">Reset</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    // Questions array
+    const questions = [
+      {q: "Which function prints output in Python?", options: ["echo()", "print()", "console.log()"], answer: 1},
+      {q: "How do you start a function in Python?", options: ["func myFunc()", "def myFunc()", "function myFunc()"], answer: 1},
+      {q: "What is the data type of [1,2,3]?", options: ["List", "Tuple", "Set"], answer: 0},
+      {q: "Which symbol is used for comments?", options: ["//", "#", "<!-- -->"], answer: 1},
+      {q: "What keyword creates a class?", options: ["function", "def", "class"], answer: 2},
+      {q: "What is the output of 2 ** 3?", options: ["6", "8", "9"], answer: 1},
+      {q: "How to import a module?", options: ["include math", "import math", "using math"], answer: 1},
+      {q: "Which keyword is used to handle exceptions?", options: ["try", "catch", "except"], answer: 2},
+      {q: "What does len('Python') return?", options: ["6", "5", "7"], answer: 0},
+      {q: "Which is immutable?", options: ["List", "Tuple", "Dictionary"], answer: 1},
+      {q: "How do you get user input?", options: ["input()", "scan()", "read()"], answer: 0},
+      {q: "What is Python?", options: ["Compiled", "Interpreted", "Assembly"], answer: 1},
+      {q: "Which is a loop in Python?", options: ["for", "while", "Both"], answer: 2},
+      {q: "How to write 'Hello' to a file f?", options: ["f.write('Hello')", "write(f,'Hello')", "print(f,'Hello')"], answer: 0},
+      {q: "Which is a Python framework?", options: ["Django", "React", "Laravel"], answer: 0},
+      {q: "Which operator is used for floor division?", options: ["/", "//", "%"], answer: 1},
+      {q: "Which is a correct dictionary?", options: ["{1,2,3}", "{'a':1,'b':2}", "[1,2,3]"], answer: 1},
+      {q: "What does 'is' check?", options: ["Identity", "Equality", "Membership"], answer: 0},
+      {q: "What is None in Python?", options: ["Null", "0", "False"], answer: 0},
+      {q: "Which keyword exits a loop?", options: ["break", "exit", "stop"], answer: 0},
+      {q: "Which creates a set?", options: ["{}", "set()", "[]"], answer: 1},
+      {q: "How do you define a lambda?", options: ["lambda x: x+1", "func(x): x+1", "def lambda(x)"], answer: 0},
+      {q: "What is PEP 8?", options: ["Error code", "Style guide", "Library"], answer: 1},
+      {q: "Which function converts string to int?", options: ["str()", "int()", "float()"], answer: 1},
+      {q: "What does 'in' operator do?", options: ["Loops", "Checks membership", "Imports"], answer: 1},
+      {q: "Which library is for data analysis?", options: ["NumPy", "Pandas", "Both"], answer: 2},
+      {q: "How to start a virtual environment?", options: ["python -m venv env", "make venv", "init venv"], answer: 0},
+      {q: "Which keyword defines a generator?", options: ["yield", "return", "gen"], answer: 0},
+      {q: "What does range(3) return?", options: ["[1,2,3]", "[0,1,2]", "[0,1,2,3]"], answer: 1},
+      {q: "Which keyword defines async functions?", options: ["async", "await", "future"], answer: 0},
+    ];
+
+    // Generate HTML
+    const questionsDiv = document.getElementById("questions");
+    questions.forEach((item, index) => {
+      const qDiv = document.createElement("div");
+      qDiv.classList.add("form-group");
+      qDiv.innerHTML = `
+        <p class="question-text">${index + 1}. ${item.q}</p>
+        <div class="options-container">
+          ${item.options.map((opt, i) => `
+            <label class="option-item">
+              <input type="radio" name="q${index}" value="${i}"> ${opt}
+            </label>
+          `).join("")}
+        </div>
+      `;
+      questionsDiv.appendChild(qDiv);
+    });
+
+    // Handle form submit
+    document.getElementById("quizForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let score = 0;
+      questions.forEach((item, index) => {
+        const selected = document.querySelector(input[name="q${index}"]:checked);
+        if (selected && parseInt(selected.value) === item.answer) {
+          score++;
+        }
+      });
+      document.getElementById("result").textContent = You scored ${score} / ${questions.length};
+    });
+  </script>
+</body>
+</html>
