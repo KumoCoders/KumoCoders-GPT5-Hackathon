@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - Kumocoders</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <href rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <style>
+               :root {
+
+            --primary-color: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --primary-light: #93c5fd;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --info-color: #06b6d4;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-bg: #0f172a;
+            --darker-bg: #0b1120;
+            --darkest-bg: #020617;
+            --light-text: #f1f5f9;
+            --muted-text: #94a3b8;
+            --card-bg: #1e293b;
+            --card-border: rgba(148, 163, 184, 0.15);
+
+            /* Glass Theme Variables */
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(148, 163, 184, 0.2);
+            --glass-highlight: rgba(56, 189, 248, 0.2);
+            --glass-accent: rgba(99, 102, 241, 0.25);
+            --glass-glow: rgba(59, 130, 246, 0.1);
+
+            /* Border Radius */
+            --border-radius-xl: 24px;
+            --border-radius-lg: 20px;
+            --border-radius-md: 16px;
+            --border-radius-sm: 12px;
+            --border-radius-xs: 8px;
+
+            /* Shadows */
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.3);
+            --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.4);
+            --inner-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+
+            /* Fonts */
+            --font-main: "Poppins", sans-serif;
+            --font-weight-light: 300;
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            --font-weight-black: 800;
+
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-xxl: 4rem;
+
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(to bottom right, var(--darkest-bg), var(--darker-bg));
+            color: var(--light-text);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: var(--spacing-md);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.8rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-color);
+        }
+
+        .logo-icon {
+            color: var(--info-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-sm);
+            background: linear-gradient(to right, var(--primary-color), var(--info-color));
+            -webkit-text-fill-color: transparent;
+            font-weight: var(--font-weight-bold);
+        }
+
+        .subtitle {
+            color: var(--muted-text);
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .feedback-form {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--spacing-md);
+            color: var(--light-text);
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-sm);
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-sm);
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition-medium);
+            cursor: pointer;
+        }
+
+        .option-item:hover {
+            background: var(--glass-highlight);
+            transform: translateY(-2px);
+        }
+
+        .option-item input {
+            margin-right: var(--spacing-sm);
+            accent-color: var(--primary-color);
+        }
+
+        .rating-group {
+            text-align: center;
+            padding: var(--spacing-md);
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xs);
+            margin: var(--spacing-md) 0;
+        }
+
+        .star {
+            font-size: 2rem;
+            color: var(--muted-text);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .star:hover,
+        .star.active {
+            color: var(--warning-color);
+            transform: scale(1.2);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: var(--transition-medium);
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--muted-text);
+            border: 1px solid var(--muted-text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.1);
+            color: var(--light-text);
+        }
+
+        .progress-container {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius-xs);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--info-color));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: right;
+            color: var(--muted-text);
+            font-size: 0.9rem;
+            margin-top: var(--spacing-xs);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted-text);
+            padding: var(--spacing-md);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--spacing-sm);
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+
+    </style>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <span>Kumocoders</span>
+            </div>
+            <h1>Share Your Feedback</h1>
+            <p class="subtitle">Your opinion helps us improve our platform</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text"><span id="progressText">1</span>/10 questions answered</div>
+        </div>
+
+        <form class="feedback-form" id="feedbackForm" action="/submit-feedback" method="POST">
+            <!-- Question 1 -->
+            <div class="form-group">
+                <p class="question-text">1. How would you rate the overall design of our platform?</p>
+                <div class="rating-group">
+                    <div class="stars">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                    <input type="hidden" name="design_rating" id="designRating" value="0">
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="form-group">
+                <p class="question-text">2. How satisfied are you with the lesson content quality?</p>
+                <div class="options-container">
+                    <label class="option-item">
+                        <input type="radio" name="content_quality" value="very_satisfied">
+                        Very Satisfied
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="content_quality" value="satisfied">
+                        Satisfied
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="content_quality" value="neutral">
+                        Neutral
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="content_quality" value="dissatisfied">
+                        Dissatisfied
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="content_quality" value="very_dissatisfied">
+                        Very Dissatisfied
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="form-group">
+                <p class="question-text">3. How easy is it to navigate through the platform?</p>
+                <div class="options-container">
+                    <label class="option-item">
+                        <input type="radio" name="navigation" value="very_easy">
+                        Very Easy
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="navigation" value="easy">
+                        Easy
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="navigation" value="neutral">
+                        Neutral
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="navigation" value="difficult">
+                        Difficult
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="navigation" value="very_difficult">
+                        Very Difficult
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="form-group">
+                <p class="question-text">4. How useful do you find the chatbot feature?</p>
+                <div class="options-container">
+                    <label class="option-item">
+                        <input type="radio" name="chatbot_usefulness" value="extremely_useful">
+                        Extremely Useful
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="chatbot_usefulness" value="very_useful">
+                        Very Useful
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="chatbot_usefulness" value="moderately_useful">
+                        Moderately Useful
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="chatbot_usefulness" value="slightly_useful">
+                        Slightly Useful
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="chatbot_usefulness" value="not_useful">
+                        Not Useful
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="form-group">
+                <p class="question-text">5. How would you rate the quiz functionality?</p>
+                <div class="options-container">
+                    <label class="option-item">
+                        <input type="radio" name="quiz_rating" value="excellent">
+                        Excellent
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="quiz_rating" value="good">
+                        Good
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="quiz_rating" value="average">
+                        Average
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="quiz_rating" value="poor">
+                        Poor
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="quiz_rating" value="very_poor">
+                        Very Poor
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="form-group">
+                <p class="question-text">6. How responsive is our platform on your device?</p>
+                <div class="options-container">
+                    <label class="option-item">
+                        <input type="radio" name="responsiveness" value="very_responsive">
+                        Very Responsive
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="responsiveness" value="responsive">
+                        Responsive
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="responsiveness" value="neutral">
+                        Neutral
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="responsiveness" value="slow">
+                        Slow
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="responsiveness" value="very_slow">
+                        Very Slow
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="form-group">
+                <p class="question-text">7. How likely are you to recommend our platform to others?</p>
+                <div class="options-container">
+                    <label class="option-item">
+                        <input type="radio" name="recommendation" value="very_likely">
+                        Very Likely
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="recommendation" value="likely">
+                        Likely
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="recommendation" value="neutral">
+                        Neutral
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="recommendation" value="unlikely">
+                        Unlikely
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="recommendation" value="very_unlikely">
+                        Very Unlikely
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="form-group">
+                <p class="question-text">8. How would you rate the certificate system?</p>
+                <div class="options-container">
+                    <label class="option-item">
+                        <input type="radio" name="certificate_rating" value="excellent">
+                        Excellent
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="certificate_rating" value="good">
+                        Good
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="certificate_rating" value="average">
+                        Average
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="certificate_rating" value="poor">
+                        Poor
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="certificate_rating" value="very_poor">
+                        Very Poor
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="form-group">
+                <p class="question-text">9. How helpful is the to-do list feature?</p>
+                <div class="options-container">
+                    <label class="option-item">
+                        <input type="radio" name="todo_helpfulness" value="very_helpful">
+                        Very Helpful
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="todo_helpfulness" value="helpful">
+                        Helpful
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="todo_helpfulness" value="neutral">
+                        Neutral
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="todo_helpfulness" value="unhelpful">
+                        Unhelpful
+                    </label>
+                    <label class="option-item">
+                        <input type="radio" name="todo_helpfulness" value="very_unhelpful">
+                        Very Unhelpful
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="form-group">
+                <p class="question-text">10. How would you rate the overall learning experience?</p>
+                <div class="rating-group">
+                    <div class="stars">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                    <input type="hidden" name="experience_rating" id="experienceRating" value="0">
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="reset" class="btn btn-secondary">Reset Form</button>
+                <button type="submit" class="btn btn-primary">Submit Feedback</button>
+            </div>
+        </form>
+
+        <footer>
+            <p>© {{year}} Kumocoders - Empowering Everyone to Learn Programming</p>
+        </footer>
+    </div>
+
+    <script>
+        
+        document.querySelectorAll('.stars').forEach(starsContainer => {
+            const stars = starsContainer.querySelectorAll('.star');
+            const hiddenInput = starsContainer.nextElementSibling;
+            
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = star.getAttribute('data-value');
+                    hiddenInput.value = value;
+                    
+                    
+                    stars.forEach(s => {
+                        if (s.getAttribute('data-value') <= value) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                    
+                    updateProgress();
+                });
+            });
+        });
+
+        
+        function updateProgress() {
+            const form = document.getElementById('feedbackForm');
+            const inputs = form.querySelectorAll('input[type="radio"]:checked, input[type="hidden"][value!="0"]');
+            const progress = (inputs.length / 10) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = inputs.length;
+        }
+
+        
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', updateProgress);
+        });
+
+        
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            
+            const inputs = this.querySelectorAll('input[type="radio"]:checked, input[type="hidden"][value!="0"]');
+            
+            if (inputs.length < 10) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+            
+            
+            alert('Thank you for your feedback! Your responses have been recorded.');
+            this.reset();
+            
+            
+            document.querySelectorAll('.star').forEach(star => {
+                star.classList.remove('active');
+            });
+            document.querySelectorAll('input[type="hidden"]').forEach(input => {
+                input.value = '0';
+            });
+            
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
