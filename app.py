@@ -220,7 +220,7 @@ def chat():
 
             # Call OpenAI
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",  # or "gpt-5" if available
+                model="gpt-5",  # or "gpt-5" if available
                 messages=[
                     {"role": "system", "content": context},
                     {"role": "user", "content": user_input}
@@ -438,4 +438,5 @@ if __name__ == '__main__':
         print("Please check your .env file")
     
     # Run the app
+
     app.run(host='0.0.0.0', port=80, debug=True)
